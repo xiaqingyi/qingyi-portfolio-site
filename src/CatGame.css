@@ -1,0 +1,46 @@
+/* CatGame.css */
+
+.cat-game-container {
+    text-align: center;
+    padding: 3rem 1rem;
+    background-color: #fff7fa;
+    border-radius: 16px;
+    max-width: 600px;
+    margin: 3rem auto;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.cat-game-container h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #d63384;
+}
+
+.score {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #444;
+}
+
+.cat-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.cat-img {
+    width: 200px;
+    height: auto;
+    transition: transform 0.2s ease;
+}
+
+.cat-button:hover .cat-img {
+    transform: scale(1.1);
+}
+
+.cat-text {
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 1rem;
+    font-style: italic;
+}

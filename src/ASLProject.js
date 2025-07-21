@@ -16,14 +16,6 @@ function ASLProject() {
                 style={{ width: '100%', borderRadius: '12px', margin: '1rem 0', boxShadow: '0 4px 16px rgba(0,0,0,0.1)' }}
             />
 
-            <h3 style={{ marginTop: '2.5rem' }}>🎥 Project Demo Video</h3>
-            <video
-                src="/Handsign.mov"
-                controls
-                style={{ width: '60%', borderRadius: '12px', margin: '1.5rem auto', display: 'block', boxShadow: '0 4px 16px rgba(0,0,0,0.1)' }}
-            >
-                Your browser does not support the video tag.
-            </video>
         </div>
     );
 }

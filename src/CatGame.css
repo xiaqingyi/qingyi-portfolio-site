@@ -1,46 +1,255 @@
 /* CatGame.css */
 
-.cat-game-container {
+/* ===== App shell ===== */
+:root {
+    --cell: clamp(14px, 3.2vw, 28px);   /* responsive cell size */
+    --gap: 3px;
+    --radius: 14px;
+    --shadow: 0 8px 24px rgba(0,0,0,.08);
+    --pink: #ffe9f1;
+    --ink: #2a2a2a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: #fff6fb;
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+    touch-action: manipulation; /* Prevent browser handling of all panning and zooming gestures */
+}
+
+/* ===== Wrapper ===== */
+.cat-snake-wrapper {
+    max-width: 820px;
+    margin: 1rem auto;
+    padding: 1rem;
     text-align: center;
-    padding: 3rem 1rem;
-    background-color: #fff7fa;
-    border-radius: 16px;
-    max-width: 600px;
-    margin: 3rem auto;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
 }
 
-.cat-game-container h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: #d63384;
+/* Title + intro image */
+.cat-snake-wrapper h1 {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.25rem, 5vw, 2rem);
 }
 
-.score {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: #444;
-}
-
-.cat-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.cat-img {
-    width: 200px;
+.intro-cat-img {
+    width: clamp(140px, 35vw, 220px);
     height: auto;
-    transition: transform 0.2s ease;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(255, 105, 180, .25);
+    margin: .5rem auto 1rem;
+    display: block;
 }
 
-.cat-button:hover .cat-img {
-    transform: scale(1.1);
+/* ===== Controls / Score ===== */
+.start-button,
+.retry-button {
+    appearance: none;
+    border: none;
+    border-radius: 999px;
+    padding: .75rem 1.5rem;
+    margin: .5rem .35rem 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    background: linear-gradient(180deg, #ffb7d9, #ff8fc3);
+    color: #212121;
+    box-shadow: 0 6px 16px rgba(255, 105, 180, .35);
+    transition: transform .06s ease, box-shadow .12s ease, filter .12s ease;
+    min-height: 44px; /* Minimum touch target size */
+}
+.start-button:hover,
+.retry-button:hover { filter: brightness(1.05); }
+.start-button:active,
+.retry-button:active { transform: translateY(1px); }
+
+.score-display {
+    font-size: 1rem;
+    margin: 0 0 .75rem;
+    padding: .5rem .75rem;
+    background: #fff0f6;
+    border: 1px solid #ffd4e8;
+    display: inline-block;
+    border-radius: 999px;
 }
 
-.cat-text {
-    font-size: 1.2rem;
-    color: #555;
+/* ===== Game grid ===== */
+.cat-snake-grid {
+    display: inline-block;          /* keeps grid sized to content and centered */
+    padding: calc(var(--gap) + 2px);
+    border-radius: 12px;
+    background:
+            linear-gradient(#ffd6e6, #ffd6e6) padding-box,
+            conic-gradient(from 180deg at 50% 50%, #ffbcd7, #ffd6e6, #ffcbe2, #ffbcd7) border-box;
+    border: 2px solid transparent;
+    box-shadow: inset 0 0 0 1px rgba(255, 192, 203, .25);
+    touch-action: none; /* Prevent default touch behaviors on the game grid */
+}
+
+/* Each row is a flex line of cells */
+.row {
+    display: flex;
+    gap: var(--gap);
+}
+
+.row + .row { margin-top: var(--gap); }
+
+/* Single cell */
+.cell {
+    width: var(--cell);
+    height: var(--cell);
+    border-radius: 4px;
+    background: #fff;
+    border: 1px solid #f1d0dc;
+    display: grid;
+    place-items: center;
+    line-height: 1;
+    user-select: none;
+}
+
+/* Emoji sizing + subtle pop on updates */
+.cell > * {
+    font-size: calc(var(--cell) - 4px);
+    transform: translateY(1px); /* optical centering for emojis */
+}
+
+/* Optional animated class used by you */
+.animated { animation: pop .25s ease; }
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* ===== Game over ===== */
+.game-over {
+    margin: .85rem auto 0.35rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #c2185b;
+}
+
+/* ===== Leaderboard ===== */
+.leaderboard {
     margin-top: 1rem;
-    font-style: italic;
+    padding: .75rem 1rem;
+    background: var(--pink);
+    border: 1px solid #ffd6e6;
+    border-radius: 12px;
+    text-align: left;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.leaderboard h3 {
+    margin: 0 0 .5rem;
+    text-align: center;
+}
+
+.leaderboard ol {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.leaderboard li {
+    padding: .25rem 0;
+    border-bottom: 1px dashed rgba(0,0,0,.08);
+}
+.leaderboard li:last-child { border-bottom: none; }
+
+/* ===== Mobile Controls ===== */
+.mobile-controls {
+    display: none; /* Hidden by default, shown on mobile */
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 10px;
+}
+
+.horizontal-controls {
+    display: flex;
+    gap: 40px; /* Space between left and right buttons */
+}
+
+.control-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 182, 193, 0.7);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+}
+
+.control-btn:active {
+    background: rgba(255, 105, 180, 0.9);
+    transform: scale(0.95);
+}
+
+/* ===== Small screens ===== */
+@media (max-width: 768px) {
+    .cat-snake-wrapper {
+        margin: 0.5rem auto;
+        padding: 0.75rem;
+    }
+
+    .score-display {
+        font-size: .9rem;
+        margin-bottom: 1rem;
+    }
+
+    .mobile-controls {
+        display: flex; /* Show controls on mobile */
+    }
+
+    .leaderboard {
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --cell: 14px; /* Smaller cells on very small devices */
+        --gap: 2px;
+    }
+
+    .cat-snake-wrapper {
+        padding: 0.5rem;
+        margin: 0.25rem;
+    }
+
+    .control-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .horizontal-controls {
+        gap: 30px;
+    }
+}
+
+.cat-snake-grid:focus {
+    outline: 2px solid rgba(255,105,180,.35);
+    outline-offset: 2px;
+}
+
+/* Prevent text selection on game elements */
+.cat-snake-grid, .control-btn, .start-button, .retry-button {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

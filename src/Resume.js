@@ -1,6 +1,85 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+function isIOS() {
+    if (typeof navigator === 'undefined') return false;
+    const ua = navigator.userAgent || navigator.vendor || '';
+    return /iPad|iPhone|iPod/.test(ua) || (ua.includes('Mac') && typeof document !== 'undefined' && 'ontouchend' in document);
+}
+
+function ResponsivePDF({ src, title, height = 800 }) {
+    const [isMobileLike, setIsMobileLike] = useState(false);
+
+    useEffect(() => {
+        const mm = window.matchMedia('(max-width: 768px)');
+        const update = () => setIsMobileLike(mm.matches || isIOS());
+        update();
+        mm.addEventListener?.('change', update);
+        return () => mm.removeEventListener?.('change', update);
+    }, []);
+
+    if (isMobileLike) {
+        return (
+            <div style={{ textAlign: 'center', margin: '1.5rem 0' }}>
+                <div style={{ padding: '1rem', background: '#fff', border: '1px solid #ccc', borderRadius: 8 }}>
+                    <p style={{ margin: '0 0 1rem 0' }}>
+                        PDF preview isn’t supported on this device. Open or download instead:
+                    </p>
+                    <div style={{ display: 'flex', gap: '.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <a
+                            href={src}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                                display: 'inline-block',
+                                padding: '.7rem 1.1rem',
+                                borderRadius: 10,
+                                background: '#fcd3e1',
+                                color: '#000',
+                                fontWeight: 700,
+                                textDecoration: 'none',
+                                border: '1px solid #e8b1c0'
+                            }}
+                        >
+                            Open PDF
+                        </a>
+                        <a
+                            href={src}
+                            download
+                            style={{
+                                display: 'inline-block',
+                                padding: '.7rem 1.1rem',
+                                borderRadius: 10,
+                                background: '#fff',
+                                color: '#000',
+                                fontWeight: 700,
+                                textDecoration: 'none',
+                                border: '1px solid #ccc'
+                            }}
+                        >
+                            Download
+                        </a>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <iframe
+            src={src}
+            title={title}
+            width="100%"
+            height={height}
+            style={{ border: 'none' }}
+        >
+            Your browser does not support PDF viewing. <a href={src}>Download</a> instead.
+        </iframe>
+    );
+}
 
 function Resume() {
+    const resumeSrc = "/QingyiXia_Resume.pdf";
+
     return (
         <div style={{ padding: '3rem 1rem', backgroundColor: '#fdebf2', minHeight: '100vh' }}>
             <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
@@ -18,17 +97,11 @@ function Resume() {
                     overflow: 'hidden',
                     marginBottom: '2rem'
                 }}>
-                    <iframe
-                        src="/CV_Qingyi_V1.pdf"
-                        width="100%"
-                        height="800px"
-                        style={{ border: 'none' }}
-                        title="Qingyi Xia Resume"
-                    ></iframe>
+                    <ResponsivePDF src={resumeSrc} title="Qingyi Xia Resume" height={800} />
                 </div>
 
                 <a
-                    href="/CV_Qingyi_V1.pdf"
+                    href={resumeSrc}
                     download
                     style={{
                         display: 'inline-block',

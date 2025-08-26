@@ -13,9 +13,26 @@ function ASLProject() {
             <img
                 src={Transformer}
                 alt="ASL Project Poster"
-                style={{ width: '100%', borderRadius: '12px', margin: '1rem 0', boxShadow: '0 4px 16px rgba(0,0,0,0.1)' }}
+                style={{
+                    width: '100%',
+                    borderRadius: '12px',
+                    margin: '1rem 0',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.1)'
+                }}
             />
 
+            <h3 style={{ marginTop: '2.5rem' }}>🎬 Real-time Hand Sign Recognition Demo Video</h3>
+            <video
+                controls
+                width="100%"
+                style={{
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.1)'
+                }}
+            >
+                <source src="/WLASL.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
         </div>
     );
 }

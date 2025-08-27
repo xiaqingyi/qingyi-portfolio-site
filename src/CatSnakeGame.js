@@ -173,7 +173,7 @@ function CatSnakeGame() {
     return (
         <div className="cat-snake-wrapper">
             <h1>🐾 Welcome to the Cat Snake Game! 🐾</h1>
-            <img src="/cat.jpg" alt="Cute Cat" className="intro-cat-img" />
+            <img src="/cat.JPG" alt="Cute Cat" className="intro-cat-img" />
             {!isRunning && (
                 <button className="start-button" onClick={handleStart}>Start Game</button>
             )}

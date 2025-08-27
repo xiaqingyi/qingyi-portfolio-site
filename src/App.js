@@ -8,7 +8,7 @@ import MoveU from "./MoveUProject";
 import ASL from "./ASLProject";
 import DRL from "./TransformerDRLProject";
 import Advize from "./AdvizeProject";
-import CatClickerGame from "./CatSnakeGame";
+import CatGame from "./CatSnakeGame";
 
 import pic1 from "./pics/IMG_11.JPG";
 import pic2 from "./pics/IMG_1810.JPG";
@@ -120,7 +120,7 @@ function MainApp() {
 
                         <li><NavLink to="/resume">Resume</NavLink></li>
                         <li><NavLink to="/contact">Contact</NavLink></li>
-                        <li><NavLink to="/cat-game">Cat Game 🐾</NavLink></li>
+                        <li><NavLink to="/catgame">Cat Game 🐾</NavLink></li>
                     </ul>
                 </nav>
             </header>
@@ -134,7 +134,7 @@ function MainApp() {
                     <Route path="/projects/advize" element={<Advize />} />
                     <Route path="/resume" element={<Resume />} />
                     <Route path="/contact" element={<Contact />} />
-                    <Route path="/cat-game" element={<CatClickerGame />} />
+                    <Route path="/catgame" element={<CatGame />} />
                 </Routes>
             </main>
         </div>

@@ -108,6 +108,7 @@ function TransformerDRLProject() {
                 <p style={{ marginBottom: '1.5rem' }}>
                     For source code, experimental logs, and implementation details, visit our GitHub repo:
                 </p>
+
                 <a
                     href="https://github.com/ZhifeiDou/Transformer_RL_Portfolio_Optimization"
                     target="_blank"
